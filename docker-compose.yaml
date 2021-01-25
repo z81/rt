@@ -1,0 +1,19 @@
+version: "3.4"
+
+services:
+  rt:
+    image: rt:latest
+    ports:
+      - "5280:5280"
+    build: .
+
+    labels:
+      - "traefik.http.routers.rt.rule=Host(`io.sawa.cat`)"
+    restart: always
+    networks:
+      - web
+
+networks:
+  web:
+    external:
+      name: "${NETWORK_NAME:-web}"
