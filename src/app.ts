@@ -1,11 +1,14 @@
 import fastify from "fastify";
 import { search } from "./search";
 import { getMagnet } from "./getMagnet";
-import { getEpisodes } from "./getInfo";
 
 const run = async () => {
   try {
     const server = fastify();
+
+    server.register(require("fastify-cors"), {
+      // put your options here
+    });
 
     server.get("/search/*", async (req) => {
       return await search(req.req.url?.substr(8) ?? "");
