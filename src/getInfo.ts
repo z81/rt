@@ -25,7 +25,7 @@ const getSeasons = (title: string) => {
   return seasons;
 };
 
-const getEpisodes = (title: string) => {
+export const getEpisodes = (title: string) => {
   const episodeRes = /(серия[ ]*[:]?[ ]*(\d+)|(\d+)[ ]*серия|(E\d+))/gim.exec(
     title
   );
@@ -58,9 +58,17 @@ const getEpisodes = (title: string) => {
         episodeResRangeRes[13]
     );
 
-  const episodes = episodeResEnd
+  let episodes = episodeResEnd
     ? range(episodeResStart ?? 1, episodeResEnd + 1)
     : [episode];
+
+  const episode2Res = /\[(\d+\+)?(\d+) из (\d+)(\+\d*)?\]/gim.exec(title);
+
+  if (episode2Res) {
+    const end = Number(episode2Res[1] || 0) + Number(episode2Res[2]) + 1;
+
+    episodes = range(1, end);
+  }
 
   return episodes.filter(Boolean);
 };

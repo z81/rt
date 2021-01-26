@@ -1,13 +1,14 @@
 import fastify from "fastify";
 import { search } from "./search";
 import { getMagnet } from "./getMagnet";
+import { getEpisodes } from "./getInfo";
 
 const run = async () => {
   try {
     const server = fastify();
 
-    server.get("/search/:query", async ({ params }) => {
-      return await search(params.query);
+    server.get("/search/*", async (req) => {
+      return await search(req.req.url?.substr(8) ?? "");
     });
 
     server.get("/magnet/*", async (req) => {

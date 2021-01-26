@@ -5,7 +5,7 @@ import { getInfo } from "./getInfo";
 export const BASE_URL = "https://torlook.info/";
 
 export const search = async (query: string) => {
-  const { body } = await got(`${BASE_URL}${query}`);
+  const { body } = await got(`${BASE_URL}${decodeURI(query)}`);
   const $ = cheerio.load(body);
 
   const items = $("#resultsDiv .webResult.item");
