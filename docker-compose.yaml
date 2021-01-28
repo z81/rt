@@ -6,9 +6,7 @@ services:
     ports:
       - "5280:5280"
     build: .
-
-    labels:
-      - "traefik.http.routers.rt.rule=Host(`io.sawa.cat`)"
+    
     restart: always
     networks:
       - web
